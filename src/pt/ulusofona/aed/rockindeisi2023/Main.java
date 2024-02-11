@@ -305,12 +305,6 @@ public class Main {
     public static int musicas_colaborado(String nameToFInd) {
 
         int count = nameCount.getOrDefault(nameToFInd, 0);
-        /*int count1 = 0;
-        for (String name : namesArtist) {
-            if (name.equals(nameToFInd)) {
-                count++;
-            }
-        }*/
         return count;
     }
 
@@ -743,77 +737,6 @@ public class Main {
     }
 
 
-
-    /*public static QueryResult get_artist_one_song(int ano_inicio, int ano_fim) {
-        long startTime = System.currentTimeMillis();
-
-        if (ano_inicio >= ano_fim) {
-            long endTime = System.currentTimeMillis();
-            long durationMillis = endTime - startTime;
-            return new QueryResult("Invalid period", durationMillis);
-        }
-        ArrayList<Songs> musicas_entre_anos = new ArrayList<>();
-
-        for (int i = 0; i < matchedSongsArrayList.size(); i++) {
-            Songs musica = matchedSongsArrayList.get(i);
-            if (musica.year >= ano_inicio && musica.year <= ano_fim) {
-                musicas_entre_anos.add(musica);
-            }
-        }
-
-        // Remove artistas com duas músicas ou mais
-        for (int i = 0; i < musicas_entre_anos.size() - 1; i++) {
-            Songs currentMusica = musicas_entre_anos.get(i);
-            List<String> currentArtistas = currentMusica.getArtistas();
-            for (int j = i + 1; j < musicas_entre_anos.size(); j++) {
-                Songs nextMusica = musicas_entre_anos.get(j);
-                List<String> nextArtistas = nextMusica.getArtistas();
-                nextArtistas.removeIf(currentArtistas::contains); // Remove common artists
-                if (nextArtistas.isEmpty()) {
-                    musicas_entre_anos.remove(j);
-                    j--; // Update the index after removal
-                }
-            }
-        }
-
-        // Constrói a string com os artistas que têm apenas uma música
-        TreeSet<Songs> sortedSongs = new TreeSet<>((song1, song2) -> {
-            String artist1 = song1.getArtistas().get(0);
-            String artist2 = song2.getArtistas().get(0);
-            return artist1.compareTo(artist2);
-        });
-
-        // Add the songs to the TreeSet
-        sortedSongs.addAll(musicas_entre_anos);
-
-        // Iterate through the sorted songs
-        StringBuilder artistas = new StringBuilder();
-        for (Songs musica : sortedSongs) {
-            List<String> artistList = musica.getArtistas();
-            for (String artist : artistList) {
-                String artista = artist.substring(1, artist.length() - 1);
-                artistas.append(artista)
-                        .append(" | ")
-                        .append(musica.name)
-                        .append(" | ")
-                        .append(musica.year)
-                        .append("\n");
-            }
-        }
-
-        String resultado = artistas.toString().trim();
-
-        if (resultado.isEmpty()) {
-            resultado = "No results";
-        }
-
-        long endTime = System.currentTimeMillis();
-        long durationMillis = endTime - startTime;
-        return new QueryResult(resultado, durationMillis);
-    }*/
-
-
-
     // \21/ query opcional
     public static QueryResult count_duplicate_songs_year(int ano) {
         long startTime = System.currentTimeMillis();
@@ -1111,18 +1034,9 @@ public class Main {
         // Sort the tags by descending order of occurrences
         ArrayList<Map.Entry<String, Integer>> entryList = new ArrayList<>(tagOccurrences.entrySet());
 
-        /*Collections.sort(entryList, new Comparator<Map.Entry<String, Integer>>() {
-            public int compare(Map.Entry<String, Integer> entry1, Map.Entry<String, Integer> entry2) {
-                return entry2.getValue().compareTo(entry1.getValue());
-            }
-        });*/
-        //ArrayList<String> sortedList = new ArrayList<>();
+        
         Collections.sort(sortedTags, Comparator.comparingInt((String tag) -> tagOccurrences.get(tag)).reversed());
 
-
-        /*for (Map.Entry<String, Integer> entry : entryList) {
-            sortedList.add(entry.getKey());
-        }*/
 
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -1222,48 +1136,7 @@ public class Main {
 
 
 
-
-    /*
-    LEGENDA
-
-    \1/ parseMultipleArtists
-
-    \2/ a \7/ loadFiles
-
-    \8/ musicas_colaborado
-
-    \9/ getObjects
-
-    \10/ e \11/ parse e execute
-
-    \12/ a \20/ queries obrigatórias
-
-    \21/ a \29/ queries opcionais
-     */
-
-
-
-
-
     public static void main(String[] args) {
-        //loadFiles(new File("large-files"));
-        //System.out.println(get_most_frequent_words_in_artist_name(8,10,10).result);
-        //System.out.println(getUniqueTagsInBetweenYears(1920,2000).result);
-        /*long start = currentTimeMillis();
-        //System.out.println(get_artist_one_song(1,1900,2010).result);
-        for (Map.Entry<String, Artist> entry : artistMap.entrySet()) {
-            String artistId = entry.getKey();
-            Artist artist = entry.getValue();
-            System.out.println("Artist ID: " + artistId);
-            System.out.println("Artist Object: " + artist.tags);
-        }
-
-        System.out.println(currentTimeMillis()-start);
-        /*long startTime =System.currentTimeMillis();
-        loadFiles(new File("large-files"));
-        System.out.println(getObjects(TipoEntidade.ARTISTA));
-        long durationMillis = System.currentTimeMillis() - startTime;
-        System.out.println("it took  "+durationMillis);*/
         System.out.println("Welcome to Rock in DEISI!");
         if (!loadFiles(new File("."))) {
             System.out.println("Error reading files");
